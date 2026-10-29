@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# QRForge
 
-## Getting Started
+A free, responsive QR code generator built with Next.js, React, TypeScript, and Tailwind CSS. QR codes are generated in the browser; content is not sent to a QR service or stored by the app.
 
-First, run the development server:
+## Features
+
+- Create QR codes for URLs, text, email, phone, WhatsApp, Wi-Fi, and vCards.
+- Customize foreground/background colors, output size, quiet zone, and error correction.
+- Download high-resolution PNG or vector SVG; copy the QR image or encoded content where supported.
+- No account, database, QR API, or generation limits.
+
+## Run locally
+
+Requires Node.js 20.9 or later.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Checks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
 
-## Learn More
+## Deploy to Vercel
 
-To learn more about Next.js, take a look at the following resources:
+Import this folder into Vercel, or connect its Git repository in the Vercel dashboard. The default Next.js build settings work; no environment variables, custom domain, database, or API key are needed.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+src/
+  app/
+    icon.svg
+    page.tsx
+    layout.tsx
+    globals.css
+    privacy/page.tsx
+    terms/page.tsx
+  components/
+    QRGenerator.tsx
+  lib/
+    qr.ts
+  types/
+    qr.ts
+```
