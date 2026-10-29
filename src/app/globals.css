@@ -415,6 +415,168 @@ select:focus-visible {
   margin-top: 15px;
 }
 
+.frame-divider {
+  margin-top: 21px;
+}
+
+.frames-section {
+  min-width: 0;
+}
+
+.frames-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.frames-heading h3 {
+  margin: 0;
+  color: #35433b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.frame-selector {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+  gap: 7px;
+}
+
+.frame-option {
+  min-width: 0;
+  min-height: 84px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  color: #657269;
+  border: 1px solid #e4e9e4;
+  border-radius: 7px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+.frame-option:hover {
+  border-color: #9dc3a7;
+  background: #fbfdfb;
+}
+
+.frame-option.selected {
+  color: var(--green-dark);
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green);
+  background: #f7fbf8;
+}
+
+.frame-thumbnail {
+  position: relative;
+  height: 48px;
+  min-height: 48px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #edf0ed;
+  border-radius: 3px;
+  background: #fff;
+}
+
+.frame-thumb-qr {
+  width: 25px;
+  height: 25px;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  padding: 2px;
+  background: #fff;
+}
+
+.frame-thumb-qr i {
+  background: #17251f;
+}
+
+.frame-thumb-qr i:nth-child(2),
+.frame-thumb-qr i:nth-child(4),
+.frame-thumb-qr i:nth-child(6) {
+  background: transparent;
+}
+
+.frame-thumb-qr i:nth-child(8) {
+  background: #829287;
+}
+
+.frame-option-label {
+  overflow: hidden;
+  color: inherit;
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+}
+
+.frame-selected-label {
+  color: var(--green-dark);
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.frame-simple .frame-thumb-qr,
+.frame-rounded .frame-thumb-qr {
+  outline: 1.5px solid #26352d;
+  outline-offset: 3px;
+}
+
+.frame-rounded .frame-thumb-qr {
+  border-radius: 4px;
+  outline-style: solid;
+}
+
+.frame-cta .frame-thumb-qr,
+.frame-minimal .frame-thumb-qr {
+  transform: translateY(-4px);
+}
+
+.frame-cta::after,
+.frame-minimal::after {
+  position: absolute;
+  right: 2px;
+  bottom: 3px;
+  left: 2px;
+  color: #26352d;
+  content: "SCAN";
+  font-size: 5px;
+  font-weight: 750;
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+.frame-dark {
+  background: #26352d;
+  border-color: #26352d;
+}
+
+.frame-dark .frame-thumb-qr {
+  outline: 3px solid #fff;
+}
+
+.frame-customization {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.frame-color-row {
+  margin: 0;
+}
+
+.frame-color-row .field-label {
+  font-size: 10px;
+}
+
 .range-input {
   width: 100%;
   height: 16px;

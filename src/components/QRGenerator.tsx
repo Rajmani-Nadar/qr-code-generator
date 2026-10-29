@@ -11,14 +11,17 @@ import {
   type ReactNode,
 } from "react";
 import {
-  createQRDataUrl,
-  createQRSvg,
+  createQRFramedSvg,
+  createQRPreviewDataUrl,
   getQRContent,
 } from "@/lib/qr";
+import QRFrames from "@/components/QRFrames";
 import {
+  defaultQRFrameSettings,
   defaultQRFormValues,
   defaultQRSettings,
   qrTypes,
+  type QRFrameSettings,
   type QRFormValues,
   type QRSettings,
   type QRType,
@@ -125,6 +128,7 @@ export default function QRGenerator() {
   const [type, setType] = useState<QRType>("URL");
   const [values, setValues] = useState<QRFormValues>(defaultQRFormValues);
   const [settings, setSettings] = useState<QRSettings>(defaultQRSettings);
+  const [frameSettings, setFrameSettings] = useState<QRFrameSettings>(defaultQRFrameSettings);
   const [activeContent, setActiveContent] = useState("");
   const [preview, setPreview] = useState("");
   const [error, setError] = useState("");
@@ -143,6 +147,11 @@ export default function QRGenerator() {
   ) => {
     if (activeContent) setIsGenerating(true);
     setSettings((current) => ({ ...current, [key]: value }));
+  };
+
+  const updateFrameSettings = (nextSettings: QRFrameSettings) => {
+    if (activeContent) setIsGenerating(true);
+    setFrameSettings(nextSettings);
   };
 
   const handleGenerate = (event: FormEvent<HTMLFormElement>) => {
@@ -171,7 +180,7 @@ export default function QRGenerator() {
 
     let cancelled = false;
     const currentId = ++generationId.current;
-    createQRDataUrl(activeContent, settings)
+    createQRPreviewDataUrl(activeContent, settings, frameSettings)
       .then((dataUrl) => {
         if (!cancelled && currentId === generationId.current) {
           setPreview(dataUrl);
@@ -193,13 +202,14 @@ export default function QRGenerator() {
     return () => {
       cancelled = true;
     };
-  }, [activeContent, generationRequest, settings]);
+  }, [activeContent, frameSettings, generationRequest, settings]);
 
   const handleReset = () => {
     generationId.current += 1;
     setType("URL");
     setValues(defaultQRFormValues);
     setSettings(defaultQRSettings);
+    setFrameSettings(defaultQRFrameSettings);
     setActiveContent("");
     setPreview("");
     setError("");
@@ -269,7 +279,7 @@ export default function QRGenerator() {
       return;
     }
     try {
-      const svg = await createQRSvg(activeContent, settings);
+      const svg = await createQRFramedSvg(activeContent, settings, frameSettings);
       const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
       const link = document.createElement("a");
       link.href = url;
@@ -460,6 +470,9 @@ export default function QRGenerator() {
             <p className="field-hint">Space around the code helps scanners read it reliably.</p>
           </div>
 
+          <div className="section-divider frame-divider" />
+          <QRFrames value={frameSettings} onChange={updateFrameSettings} />
+
           {error && <p className="error-message" role="alert">{error}</p>}
           <button className="generate-button" type="submit" disabled={isGenerating}>
             {isGenerating ? "Generating..." : "Generate QR code"}
@@ -505,17 +518,17 @@ export default function QRGenerator() {
             {preview ? "Scan it with your camera, or save it below." : "Your QR code will appear here"}
           </p>
           <div className="download-actions">
-            <button className="download-button primary-download" onClick={handleDownloadPng} type="button" disabled={!preview}>
+            <button className="download-button primary-download" onClick={handleDownloadPng} type="button" disabled={!preview || isGenerating}>
               <Icon><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><path d="m7 10 5 5 5-5" /><path d="M12 15V3" /></Icon>
               Download PNG
             </button>
-            <button className="download-button" onClick={handleDownloadSvg} type="button" disabled={!preview}>
+            <button className="download-button" onClick={handleDownloadSvg} type="button" disabled={!preview || isGenerating}>
               <Icon><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="M14 2v6h6" /><path d="M8 13h8M8 17h8" /></Icon>
               Download SVG
             </button>
           </div>
           <div className="copy-actions">
-            <button className="text-action" type="button" onClick={handleCopyQR} disabled={!preview}>Copy QR</button>
+            <button className="text-action" type="button" onClick={handleCopyQR} disabled={!preview || isGenerating}>Copy QR</button>
             <span aria-hidden="true">·</span>
             <button className="text-action" type="button" onClick={handleCopyContent} disabled={!activeContent}>Copy content</button>
           </div>
