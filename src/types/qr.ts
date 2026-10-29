@@ -35,7 +35,7 @@ export type QRFormValues = {
 };
 
 export const defaultQRSettings: QRSettings = {
-  foreground: "#17251f",
+  foreground: "#000000",
   background: "#ffffff",
   size: 1024,
   margin: 4,

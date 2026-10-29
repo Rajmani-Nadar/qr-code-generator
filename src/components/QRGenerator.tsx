@@ -528,7 +528,7 @@ export default function QRGenerator() {
       </section>
 
       <footer className="site-footer">
-        <span>© 2026 QRForge. Free QR Code Generator.</span>
+        <span>© 2026 QRForge · Developed by Rajmani Nadar</span>
         <nav aria-label="Legal">
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>
